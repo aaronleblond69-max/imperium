@@ -7,7 +7,7 @@
 - Fixed Instant Landing and Instant Takeoff options in ship control.
 - Added visualizers for the new LOS functions.
 - Made it so challenge moon scores won't be submitted with Imperium enabled.
-- Added the possibility to change the custom welcome message. Removed the checkbox.
+- Added the possibility to change the custom welcome message.
 
 ### Bug Fixes
 
@@ -19,6 +19,7 @@
 - Replaced the unpopular 'Nordic' theme with 'Shade' from Imperium for Repo.
 - Renamed the 'Breeze' theme to 'Repo'.
 - Moved the "Disable Le Funni" config to the hidden category.
+- Adjusted most of the themes slightly to make them more consistent.
 
 ## Imperium v1.3.0 - Regular Update
 
