@@ -968,7 +968,6 @@ public class ImpSettings(ConfigFile config)
         internal readonly ImpConfig<bool> GeneralLogging = new(config, "Preferences.General", "GeneralLogging", true);
         internal readonly ImpConfig<bool> OracleLogging = new(config, "Preferences.General", "OracleLogging", false);
         internal readonly ImpConfig<bool> LeftHandedMode = new(config, "Preferences.General", "LeftHandedMode", false);
-        internal readonly ImpConfig<bool> CustomWelcome = new(config, "Preferences.General", "CustomWelcome", true);
         internal readonly ImpConfig<bool> ShowTooltips = new(config, "Preferences.General", "Tooltips", true);
         internal readonly ImpConfig<bool> PlaySounds = new(config, "Preferences.General", "Sounds", true);
 
@@ -1129,10 +1128,18 @@ public class ImpSettings(ConfigFile config)
 
         internal readonly ImpConfig<bool> DisableLeFunni = new(
             config,
-            "Preferences.General",
+            "Preferences.Hidden",
             "DisableLeFunni",
             false,
             description: "Disables 69% sales in the terminal. (\u0361\u00b0 \u035cʖ \u0361\u00b0)"
+        );
+
+        internal readonly ImpConfig<string> CustomWelcome = new(
+            config,
+            "Preferences.Hidden",
+            "CustomWelcome",
+            "GREETINGS, PADAWAN",
+            description: "The custom welcome screen when starting the game with Imperium. Disabled if set to an empty string."
         );
     }
 
