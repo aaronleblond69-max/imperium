@@ -168,7 +168,7 @@ public static class ImpThemeManager
         {
             "Shade", new ImpTheme
             {
-                backgroundColor = HEXToRGB("#111621"),
+                backgroundColor = HEXToRGB("#111621FB"),
                 primaryColor = HEXToRGB("#464e6b"),
                 textColor = HEXToRGB("#FFFFFF")
             }
