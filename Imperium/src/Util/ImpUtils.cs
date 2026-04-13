@@ -343,4 +343,18 @@ public abstract class ImpUtils
             yield return it;
         }
     }
+
+    internal static T GetOrAddComponent<T>(MonoBehaviour self) where T : MonoBehaviour
+    {
+        return GetOrAddComponent<T>(self.gameObject);
+    }
+
+    internal static T GetOrAddComponent<T>(GameObject self) where T : MonoBehaviour
+    {
+        if (!self.TryGetComponent<T>(out var component))
+        {
+            component = self.AddComponent<T>();
+        }
+        return component;
+    }
 }
