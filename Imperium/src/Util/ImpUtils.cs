@@ -344,12 +344,12 @@ public abstract class ImpUtils
         }
     }
 
-    internal static T GetOrAddComponent<T>(MonoBehaviour self) where T : MonoBehaviour
+    internal static T GetOrAddComponent<T>(Component self) where T : Component
     {
         return GetOrAddComponent<T>(self.gameObject);
     }
 
-    internal static T GetOrAddComponent<T>(GameObject self) where T : MonoBehaviour
+    internal static T GetOrAddComponent<T>(GameObject self) where T : Component
     {
         if (!self.TryGetComponent<T>(out var component))
         {
