@@ -24,18 +24,6 @@ internal class ShipControlWindow : ImperiumWindow
     private void InitSettings()
     {
         ImpToggle.Bind(
-            "ShipSettings/InstantLanding",
-            content,
-            Imperium.ShipManager.InstantLanding,
-            theme: theme,
-            tooltipDefinition: new TooltipDefinition
-            {
-                Title = "Instant Landing",
-                Description = "Skips the ship's landing animation.",
-                Tooltip = tooltip
-            }
-        );
-        ImpToggle.Bind(
             "ShipSettings/InstantTakeoff",
             content,
             Imperium.ShipManager.InstantTakeoff,
@@ -44,6 +32,18 @@ internal class ShipControlWindow : ImperiumWindow
             {
                 Title = "Instant Takeoff",
                 Description = "Skips the ship's take-off animation.",
+                Tooltip = tooltip
+            }
+        );
+        ImpToggle.Bind(
+            "ShipSettings/InstantLanding",
+            content,
+            Imperium.ShipManager.InstantLanding,
+            theme: theme,
+            tooltipDefinition: new TooltipDefinition
+            {
+                Title = "Instant Landing",
+                Description = "Skips the ship's landing animation.",
                 Tooltip = tooltip
             }
         );

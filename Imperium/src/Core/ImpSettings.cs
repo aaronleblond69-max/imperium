@@ -177,17 +177,17 @@ public class ImpSettings(ConfigFile config)
             false
         );
 
-        [ImpAttributes.HostMasterBinding] internal readonly ImpConfig<bool> InstantLanding = new(
-            config,
-            "Game.Ship",
-            "InstantLanding",
-            false
-        );
-
         [ImpAttributes.HostMasterBinding] internal readonly ImpConfig<bool> InstantTakeoff = new(
             config,
             "Game.Ship",
             "InstantTakeoff",
+            false
+        );
+
+        [ImpAttributes.HostMasterBinding] internal readonly ImpConfig<bool> InstantLanding = new(
+            config,
+            "Game.Ship",
+            "InstantLanding",
             false
         );
 
