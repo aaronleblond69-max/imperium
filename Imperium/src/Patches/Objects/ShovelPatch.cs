@@ -76,7 +76,7 @@ internal class SpeedyShovelPlayerBehaviour : MonoBehaviour
     private void Awake()
     {
         PlayerBodyAnimator = gameObject.GetComponent<PlayerControllerB>().playerBodyAnimator;
-        LayerIndex = PlayerBodyAnimator.GetLayerIndex(ImpAnimator.Metarig.Layer_HoldingItemsBothHands);
+        LayerIndex = PlayerBodyAnimator.GetLayerIndex(ImpAnimatorHash.Metarig.Layer_HoldingItemsBothHands);
     }
 
     private void ReelUp()
@@ -113,8 +113,8 @@ internal class SpeedyShovelPlayerBehaviour : MonoBehaviour
         {
             AnimatorStateInfo stateInfo = PlayerBodyAnimator.GetCurrentAnimatorStateInfo(LayerIndex);
             var hash = stateInfo.shortNameHash;
-            return hash != ImpAnimator.Metarig.ShovelReelUp
-                && hash != ImpAnimator.Metarig.HitShovel;
+            return hash != ImpAnimatorHash.Metarig.ShovelReelUp
+                && hash != ImpAnimatorHash.Metarig.HitShovel;
         });
         ResetSpeed();
         Coroutine = null;
