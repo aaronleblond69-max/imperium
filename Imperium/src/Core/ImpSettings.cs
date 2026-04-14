@@ -191,6 +191,13 @@ public class ImpSettings(ConfigFile config)
             false
         );
 
+        [ImpAttributes.HostMasterBinding] internal readonly ImpConfig<bool> InstantRoute = new(
+            config,
+            "Game.Ship",
+            "InstantRoute",
+            false
+        );
+
         [ImpAttributes.HostMasterBinding] internal readonly ImpConfig<bool> UnlockShop = new(
             config,
             "Game.Terminal",
