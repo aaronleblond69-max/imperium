@@ -9,7 +9,7 @@ namespace Imperium.Util;
 /// <summary>
 ///     Layers of animators, and hashes of animations names.
 /// </summary>
-internal static class ImpAnimator
+internal static class ImpAnimatorHash
 {
     internal static class Metarig
     {
