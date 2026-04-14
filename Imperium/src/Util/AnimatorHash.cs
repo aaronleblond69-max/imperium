@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Imperium.Util;
 
 /// <summary>
-///     Layers or animators and hashes of animations names.
+///     Layers of animators, and hashes of animations names.
 /// </summary>
 internal static class ImpAnimator
 {

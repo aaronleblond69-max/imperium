@@ -21,7 +21,8 @@ internal static class ShovelPatch
     }
 
     /// <summary>
-    ///     Run original enumerator but remove static waiting times and setup/reset speed.
+    ///     Run the original <see cref="Shovel.reelUpShovel" /> coroutine,
+    ///     but remove static waiting times and setup/reset speed.
     /// </summary>
     [HarmonyPostfix]
     [HarmonyPatch("reelUpShovel")]
@@ -51,9 +52,10 @@ internal class SpeedyShovelPlayerBehaviour : MonoBehaviour
     private const float SPEED_SPEEDY = 3f;
 
     /// <summary>
-    ///     Replacement or rather wrapper for vanilla <see cref="Shovel.reelUpShovel" /> coroutine,
-    ///     but remove static waiting times and setup/reset speed. Assumes that Speedy Shovel setting
-    ///     is enabled at the call time.
+    ///     Run the original <see cref="Shovel.reelUpShovel" /> coroutine,
+    ///     but remove static waiting times and setup/reset speed.
+    ///
+    ///     Assumes that Speedy Shovel setting is enabled at the call time.
     /// </summary>
     internal static IEnumerator reelUpShovel(IEnumerator source, Shovel shovel)
     {
