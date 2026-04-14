@@ -344,6 +344,14 @@ public abstract class ImpUtils
         }
     }
 
+    /// <summary>
+    ///     Wrap original enumerator in <see cref="SkipWaitingForSeconds" /> if condition is true, otherwise act as a pass-through.
+    /// </summary>
+    internal static IEnumerator SkipWaitingForSecondsIf(IEnumerator result, bool condition)
+    {
+        return condition ? SkipWaitingForSeconds(result) : result;
+    }
+
     internal static T GetOrAddComponent<T>(Component self) where T : Component
     {
         return GetOrAddComponent<T>(self.gameObject);
