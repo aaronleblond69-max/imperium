@@ -2,7 +2,10 @@
 
 using Imperium.Interface.Common;
 using Imperium.Interface.ImperiumUI.Windows.ShipControl.Widgets;
+using Imperium.Util;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 #endregion
 
@@ -44,6 +47,42 @@ internal class ShipControlWindow : ImperiumWindow
             {
                 Title = "Instant Landing",
                 Description = "Skips the ship's landing animation.",
+                Tooltip = tooltip
+            }
+        );
+        {
+            // TODO: temporary hack while native UI is missing
+            var grid = content.Find("ShipSettings");
+            var source = content.Find("ShipSettings/InstantLanding");
+            var instantRoute = Instantiate(source.gameObject, grid);
+            instantRoute.name = "InstantRoute";
+            var text = (instantRoute.transform.Find("Text") ?? instantRoute.transform.Find("Text (TMP)"))?.GetComponent<TMP_Text>();
+            text.text = "Instant Route";
+            // place it directly after the original
+            instantRoute.transform.SetSiblingIndex(source.GetSiblingIndex() + 1);
+
+            // add an empty spacer cell after the clone
+            var spacer = new GameObject("EmptyCell", typeof(RectTransform));
+            spacer.transform.SetParent(grid, false);
+            spacer.transform.SetSiblingIndex(instantRoute.transform.GetSiblingIndex() + 1);
+
+            // force grid to resize vertically
+            var gridRect = grid.GetComponent<RectTransform>();
+            var fitter = ImpUtils.GetOrAddComponent<ContentSizeFitter>(grid);
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(gridRect);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+        }
+        ImpToggle.Bind(
+            "ShipSettings/InstantRoute",
+            content,
+            Imperium.ShipManager.InstantRoute,
+            theme: theme,
+            tooltipDefinition: new TooltipDefinition
+            {
+                Title = "Instant Route",
+                Description = "Skips the ship's route animation.",
                 Tooltip = tooltip
             }
         );
