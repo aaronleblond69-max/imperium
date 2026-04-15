@@ -44,13 +44,19 @@ public class ImpNightVision : MonoBehaviour
 
     private void Update()
     {
-        // disabling HDAdditionalLightData won't do anything useful
-        Near.Light.enabled = Imperium.Player.nightVision.enabled;
-        Far.Light.enabled = Imperium.Player.nightVision.enabled;
+        var nightVision = Imperium.Settings.Player.NightVision.Value;
+        var active = nightVision > 0f;
 
-        // intensity must be set on HDAdditionalLightData as the source of truth
-        Near.Data.intensity = Imperium.Settings.Player.NightVision.Value * 100f * 4f * Mathf.PI;
-        Far.Data.intensity = Imperium.Settings.Player.NightVision.Value * 1100f * 4f * Mathf.PI;
+        // disabling HDAdditionalLightData won't do anything useful
+        Near.Light.enabled = active;
+        Far.Light.enabled = active;
+
+        if (active)
+        {
+            // intensity must be set on HDAdditionalLightData as the source of truth
+            Near.Data.intensity = nightVision * 100f * 4f * Mathf.PI;
+            Far.Data.intensity = nightVision * 1100f * 4f * Mathf.PI;
+        }
     }
 }
 

@@ -8,6 +8,7 @@
 - Added visualizers for the new LOS functions.
 - Made it so challenge moon scores won't be submitted with Imperium enabled.
 - Added the possibility to change the custom welcome message.
+- Night Vision now works outdoors and in orbit too.
 
 ### Bug Fixes
 
