@@ -22,12 +22,12 @@ public class ImpNightVision : MonoBehaviour
 
         Near = SetupLight("Near", transform);
         Near.GameObject.transform.position = position + Vector3.down * 80f;
-        Near.Light.range = 70f;
-        Near.Light.color = new Color(0.875f, 0.788f, 0.791f, 1);
+        Near.Data.range = 70f;
+        Near.Data.color = new Color(0.875f, 0.788f, 0.791f, 1);
 
         Far = SetupLight("Far", transform);
         Far.GameObject.transform.position = position + Vector3.down * 30f;
-        Far.Light.range = 500f;
+        Far.Data.range = 500f;
     }
 
     private static ImpNightVisionLight SetupLight(string gameObjectName, Transform parent)
@@ -38,16 +38,19 @@ public class ImpNightVision : MonoBehaviour
         {
             GameObject = obj,
             Light = obj.AddComponent<Light>(),
+            Data = obj.AddComponent<HDAdditionalLightData>(),
         };
     }
 
     private void Update()
     {
+        // disabling HDAdditionalLightData won't do anything useful
         Near.Light.enabled = Imperium.Player.nightVision.enabled;
         Far.Light.enabled = Imperium.Player.nightVision.enabled;
 
-        Near.Light.intensity = Imperium.Settings.Player.NightVision.Value * 100f;
-        Far.Light.intensity = Imperium.Settings.Player.NightVision.Value * 1100f;
+        // intensity must be set on HDAdditionalLightData as the source of truth
+        Near.Data.intensity = Imperium.Settings.Player.NightVision.Value * 100f * 4f * Mathf.PI;
+        Far.Data.intensity = Imperium.Settings.Player.NightVision.Value * 1100f * 4f * Mathf.PI;
     }
 }
 
@@ -55,4 +58,5 @@ internal record ImpNightVisionLight
 {
     internal GameObject GameObject { get; init; }
     internal Light Light { get; init; }
+    internal HDAdditionalLightData Data { get; init; }
 }
