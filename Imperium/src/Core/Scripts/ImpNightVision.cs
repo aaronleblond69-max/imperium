@@ -76,9 +76,9 @@ public class ImpNightVision : MonoBehaviour
     {
         var active = nightVision > 0f;
 
-        // disabling HDAdditionalLightData won't do anything useful
-        Near.Light.enabled = active;
-        Far.Light.enabled = active;
+        // Disabling HDAdditionalLightData on its own won't do anything useful, the Light needs to be disabled.
+        // While at it, disable the whole GameObject to avoid reparenting to cameras while inactive.
+        gameObject.SetActive(active);
 
         if (active)
         {
