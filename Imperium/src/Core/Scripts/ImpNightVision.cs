@@ -29,6 +29,14 @@ public class ImpNightVision : MonoBehaviour
         Far = SetupLight("Far", transform);
         Far.GameObject.transform.position = position + Vector3.down * 30f;
         Far.Data.range = 500f;
+
+        Imperium.Settings.Player.NightVision.onUpdate += Refresh;
+        Refresh(Imperium.Settings.Player.NightVision.Value);
+    }
+
+    private void OnDestroy()
+    {
+        Imperium.Settings.Player.NightVision.onUpdate -= Refresh;
     }
 
     private static ImpNightVisionLight SetupLight(string gameObjectName, Transform parent)
@@ -64,9 +72,8 @@ public class ImpNightVision : MonoBehaviour
         transform.SetParent(Imperium.StartOfRound.activeCamera.transform, worldPositionStays: false);
     }
 
-    private void Update()
+    private void Refresh(float nightVision)
     {
-        var nightVision = Imperium.Settings.Player.NightVision.Value;
         var active = nightVision > 0f;
 
         // disabling HDAdditionalLightData won't do anything useful
