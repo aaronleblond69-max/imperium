@@ -1,5 +1,6 @@
 #region
 
+using GameNetcodeStuff;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 
@@ -18,7 +19,7 @@ public class ImpNightVision : MonoBehaviour
     {
         var mapCamera = GameObject.Find("MapCamera").transform;
         var position = mapCamera.position;
-        transform.SetParent(Imperium.Player.gameplayCamera.transform);
+        ReparentToActiveCamera();
 
         Near = SetupLight("Near", transform);
         Near.GameObject.transform.position = position + Vector3.down * 80f;
@@ -40,6 +41,27 @@ public class ImpNightVision : MonoBehaviour
             Light = obj.AddComponent<Light>(),
             Data = obj.AddComponent<HDAdditionalLightData>(),
         };
+    }
+
+	public void OnEnable()
+	{
+        ReparentToActiveCamera();
+		Imperium.StartOfRound.CameraSwitchEvent.AddListener(OnCameraSwitch);
+	}
+
+	public void OnDisable()
+	{
+		Imperium.StartOfRound.CameraSwitchEvent.RemoveListener(OnCameraSwitch);
+	}
+
+    private void OnCameraSwitch()
+    {
+        ReparentToActiveCamera();
+    }
+
+    private void ReparentToActiveCamera()
+    {
+        transform.SetParent(Imperium.StartOfRound.activeCamera.transform, worldPositionStays: false);
     }
 
     private void Update()
