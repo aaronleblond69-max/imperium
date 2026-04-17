@@ -14,6 +14,7 @@
 
 - Removed unnecessary log spam.
 - Streamlined various logs' log level to be more consistent.
+- Fixed Interact Hold setting that prevented interactions with Ship's Loud Horn, Cruiser's "Try Ignition" and Honk triggers.
 
 ### QoL Improvements
 
