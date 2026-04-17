@@ -117,25 +117,25 @@ internal static class PlayerControllerPatch
     [HarmonyPatch("ClickHoldInteraction")]
     private static void ClickHoldInteractionPrefixPatch(PlayerControllerB __instance)
     {
-        if (!__instance.hoveringOverTrigger) return;
+        var trigger = __instance.hoveringOverTrigger;
+        if (!trigger) return;
 
         if (Imperium.Settings.AnimationSkipping.InteractHold.Value)
         {
             // Backup original hold
-            if (!OriginalTriggerHold.ContainsKey(__instance.hoveringOverTrigger.GetInstanceID()))
+            if (!OriginalTriggerHold.ContainsKey(trigger.GetInstanceID()))
             {
-                OriginalTriggerHold[__instance.hoveringOverTrigger.GetInstanceID()] =
-                    __instance.hoveringOverTrigger.holdInteraction;
+                OriginalTriggerHold[trigger.GetInstanceID()] = trigger.holdInteraction;
             }
 
-            __instance.hoveringOverTrigger.holdInteraction = false;
+            trigger.holdInteraction = false;
         }
         else
         {
             // Restore original hold if it has been changed before
-            if (OriginalTriggerHold.TryGetValue(__instance.hoveringOverTrigger.GetInstanceID(), out var originalHold))
+            if (OriginalTriggerHold.TryGetValue(trigger.GetInstanceID(), out var originalHold))
             {
-                __instance.hoveringOverTrigger.holdInteraction = originalHold;
+                trigger.holdInteraction = originalHold;
             }
         }
     }
