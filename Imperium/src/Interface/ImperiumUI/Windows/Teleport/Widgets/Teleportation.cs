@@ -156,16 +156,24 @@ public class Teleportation : ImpWidget
 
     private void SetFireExits()
     {
-        var objs = FindObjectsOfType<GameObject>();
-        var fireExitCounter = 0;
-
         foreach (var fireExit in fireExits) Destroy(fireExit.gameObject);
         fireExits.Clear();
 
-        foreach (var obj in objs)
+        // Exclude inactive teleports like the ones on Gordion
+        var entranceTeleports = FindObjectsByType<EntranceTeleport>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        var fireExitCounter = 0;
+
+        // Outdoors teleports have isEntranceToBuilding set to true, indoors set to false.
+        // Teleports are wired up in pairs by incremental entranceId. Main ID is zero.
+
+        foreach (var entranceTeleport in entranceTeleports)
         {
-            if (obj.name != "FireExitDoor" || obj.transform.position.y > -100) continue;
-            var entrancePointPosition = obj.transform.position;
+            if (entranceTeleport.isEntranceToBuilding || entranceTeleport.entranceId == 0)
+            {
+                continue;
+            }
+            var entrancePoint = entranceTeleport.entrancePoint;
+            var entrancePointPosition = entrancePoint.position;
 
             var newFireExit = Instantiate(fireExitTemplate, fireExitContainer);
             var newFireExitText = newFireExit.transform.Find("Text").GetComponent<TMP_Text>();
