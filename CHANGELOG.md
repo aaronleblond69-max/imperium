@@ -22,6 +22,7 @@
 - Renamed the 'Breeze' theme to 'Repo'.
 - Moved the "Disable Le Funni" config to the hidden category.
 - Adjusted most of the themes slightly to make them more consistent.
+- Adjusted Fire Exit teleportation to not teleport out of bounds.
 
 ## Imperium v1.3.0 - Regular Update
 
