@@ -20,6 +20,7 @@
 - Renamed the 'Breeze' theme to 'Repo'.
 - Moved the "Disable Le Funni" config to the hidden category.
 - Adjusted most of the themes slightly to make them more consistent.
+- Adjusted search algorithm for Main Entrance to rely on entrance ID rather than on naming convention, improving compatibility with modded moons.
 
 ## Imperium v1.3.0 - Regular Update
 
