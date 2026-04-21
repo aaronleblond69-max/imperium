@@ -83,8 +83,17 @@ internal class PlayerManager : ImpLifecycleObject
         );
 
         MainEntranceTPAnchor = new ImpExternalBinding<Vector3?, bool>(() =>
-            GameObject.Find("EntranceTeleportA")?.transform.position
-        );
+        {
+            var entranceTeleports = FindObjectsByType<EntranceTeleport>(
+                FindObjectsInactive.Exclude, FindObjectsSortMode.None
+            );
+            // Outdoors teleports have isEntranceToBuilding set to true, indoors set to false.
+            // Teleports are wired up in pairs by incremental entranceId. Main ID is zero.
+            var entranceTeleport = entranceTeleports.FirstOrDefault(
+                tp => tp.isEntranceToBuilding && tp.entranceId == 0
+            );
+            return entranceTeleport?.entrancePoint.position;
+        });
 
         ApparatusTPAnchor = new ImpExternalBinding<Vector3?, bool>(() =>
         {
