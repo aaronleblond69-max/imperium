@@ -20,72 +20,13 @@ internal class ShipControlWindow : ImperiumWindow
         content = transform.Find("Content");
 
         InitSettings();
+        InitInstantSettings();
 
         RegisterWidget<Destinations>(content, "Destinations");
     }
 
     private void InitSettings()
     {
-        ImpToggle.Bind(
-            "ShipSettings/InstantTakeoff",
-            content,
-            Imperium.ShipManager.InstantTakeoff,
-            theme: theme,
-            tooltipDefinition: new TooltipDefinition
-            {
-                Title = "Instant Takeoff",
-                Description = "Skips the ship's take-off animation.",
-                Tooltip = tooltip
-            }
-        );
-        ImpToggle.Bind(
-            "ShipSettings/InstantLanding",
-            content,
-            Imperium.ShipManager.InstantLanding,
-            theme: theme,
-            tooltipDefinition: new TooltipDefinition
-            {
-                Title = "Instant Landing",
-                Description = "Skips the ship's landing animation.",
-                Tooltip = tooltip
-            }
-        );
-        {
-            // TODO: temporary hack while native UI is missing
-            var grid = content.Find("ShipSettings");
-            var source = content.Find("ShipSettings/InstantLanding");
-            var instantRoute = Instantiate(source.gameObject, grid);
-            instantRoute.name = "InstantRoute";
-            var text = (instantRoute.transform.Find("Text") ?? instantRoute.transform.Find("Text (TMP)"))?.GetComponent<TMP_Text>();
-            text.text = "Instant Route";
-            // place it directly after the original
-            instantRoute.transform.SetSiblingIndex(source.GetSiblingIndex() + 1);
-
-            // add an empty spacer cell after the clone
-            var spacer = new GameObject("EmptyCell", typeof(RectTransform));
-            spacer.transform.SetParent(grid, false);
-            spacer.transform.SetSiblingIndex(instantRoute.transform.GetSiblingIndex() + 1);
-
-            // force grid to resize vertically
-            var gridRect = grid.GetComponent<RectTransform>();
-            var fitter = ImpUtils.GetOrAddComponent<ContentSizeFitter>(grid);
-            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
-            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-            LayoutRebuilder.ForceRebuildLayoutImmediate(gridRect);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
-        }
-        ImpToggle.Bind(
-            "ShipSettings/InstantRoute",
-            content,
-            Imperium.ShipManager.InstantRoute,
-            theme: theme,
-            tooltipDefinition: new TooltipDefinition
-            {
-                Title = "Instant Route",
-                Description = "Skips the ship's route animation.",
-                Tooltip = tooltip
-            }
-        );
         ImpToggle.Bind(
             "ShipSettings/OverrideDoors",
             content,
@@ -132,6 +73,46 @@ internal class ShipControlWindow : ImperiumWindow
             {
                 Title = "Mute Speaker",
                 Description = "Please just shut up!",
+                Tooltip = tooltip
+            }
+        );
+    }
+    
+    private void InitInstantSettings()
+    {
+        ImpToggle.Bind(
+            "InstantSettings/Takeoff",
+            content,
+            Imperium.ShipManager.InstantTakeoff,
+            theme: theme,
+            tooltipDefinition: new TooltipDefinition
+            {
+                Title = "Skip Takeoff",
+                Description = "Skips the ship's take-off animation.",
+                Tooltip = tooltip
+            }
+        );
+        ImpToggle.Bind(
+            "InstantSettings/Landing",
+            content,
+            Imperium.ShipManager.InstantLanding,
+            theme: theme,
+            tooltipDefinition: new TooltipDefinition
+            {
+                Title = "Skip Landing",
+                Description = "Skips the ship's landing animation.",
+                Tooltip = tooltip
+            }
+        );
+        ImpToggle.Bind(
+            "InstantSettings/Route",
+            content,
+            Imperium.ShipManager.InstantRoute,
+            theme: theme,
+            tooltipDefinition: new TooltipDefinition
+            {
+                Title = "Skip Routing",
+                Description = "Skips the ship's route animation.",
                 Tooltip = tooltip
             }
         );
