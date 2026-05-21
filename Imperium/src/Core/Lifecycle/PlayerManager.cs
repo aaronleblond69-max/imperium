@@ -371,6 +371,8 @@ internal class PlayerManager : ImpLifecycleObject
         // ReSharper disable once Unity.PreferAddressByIdToGraphicsParams
         HUDManager.Instance.gameOverAnimator.SetTrigger("revive");
 
+        player.overridePoisonValue = false;
+        player.voiceMuffledByEnemy = false;
         player.isClimbingLadder = false;
         player.thisController.enabled = true;
         player.health = 100;
@@ -401,6 +403,9 @@ internal class PlayerManager : ImpLifecycleObject
         player.sourcesCausingSinking = 0;
         player.spectatedPlayerScript = null;
         player.helmetLight.enabled = false;
+        
+        SoundManager.Instance.playerVoicePitchTargets[playerId] = 1f;
+        SoundManager.Instance.SetPlayerPitch(1f, (int)playerId);
 
         player.ResetPlayerBloodObjects(player.isPlayerDead);
         player.ResetZAndXRotation();
@@ -416,9 +421,6 @@ internal class PlayerManager : ImpLifecycleObject
 
         Imperium.StartOfRound.SetSpectateCameraToGameOverMode(enableGameOver: false, player);
 
-        // Close interface if player has revived themselves
-        if (playerId == NetworkManager.Singleton.LocalClientId) Imperium.Interface.Close();
-
         Imperium.StartOfRound.allPlayersDead = false;
         Imperium.StartOfRound.UpdatePlayerVoiceEffects();
         Imperium.StartOfRound.ResetMiscValues();
@@ -426,6 +428,18 @@ internal class PlayerManager : ImpLifecycleObject
         // Respawn UI because for some reason this is not happening already
         Imperium.Settings.Rendering.PlayerHUD.Set(false);
         Imperium.Settings.Rendering.PlayerHUD.Set(true);
+
+        // Reset the revived player's infection for every cadaver bloom
+        var cadaverGrowths = FindObjectsByType<CadaverGrowthAI>(FindObjectsSortMode.None);
+        foreach (var cadaverGrowth in cadaverGrowths)
+        {
+            cadaverGrowth.playerInfections[playerId] = new PlayerInfection();
+        }
+
+        if (Imperium.Player != player) return;
+        
+        Imperium.Interface.Close();
+        Imperium.HUDManager.cadaverFilter = 0;
     }
 
     #endregion
