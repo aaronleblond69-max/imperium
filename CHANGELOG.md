@@ -9,6 +9,7 @@
 - Made it so challenge moon scores won't be submitted with Imperium enabled.
 - Added the possibility to change the custom welcome message.
 - Speedy Shovel now resets player animation speed right after hit.
+- Added a button to manually trigger meteor showers in the moon control window.
 
 ### Bug Fixes
 
