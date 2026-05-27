@@ -98,7 +98,10 @@ internal class PlayerManager : ImpLifecycleObject
         // Disable noclip whenever exiting flight mode
         IsFlying.onFalse += () =>
         {
-            Imperium.Player.thisController.excludeLayers = 0;
+            if (!Imperium.PlayerManager.PlayerInCruiser.Value)
+            {
+                Imperium.Player.thisController.excludeLayers = 0;
+            }
         };
     }
 
