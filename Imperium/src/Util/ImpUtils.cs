@@ -326,21 +326,22 @@ public abstract class ImpUtils
         }
     }
 
-    internal abstract class Transpiling
-    {
-        internal static IEnumerable<CodeInstruction> SkipWaitingForSeconds(IEnumerable<CodeInstruction> instructions)
+    internal static IEnumerable<CodeInstruction> SkipWaitingForSeconds(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
+            var patched = false;
 
             for (var i = 0; i < codes.Count; i++)
             {
-                if (i >= 2
+                if (!patched
+                    && i >= 2
                     && codes[i].opcode == OpCodes.Stfld
                     && codes[i - 1].opcode == OpCodes.Newobj
                     && codes[i - 2].opcode == OpCodes.Ldc_R4
                    )
                 {
                     codes[i - 2].operand = 0f;
+                    patched = true;
                 }
             }
 
