@@ -326,7 +326,9 @@ public abstract class ImpUtils
         }
     }
 
-    internal static IEnumerable<CodeInstruction> SkipWaitingForSeconds(IEnumerable<CodeInstruction> instructions)
+    internal abstract class Transpiling
+    {
+        internal static IEnumerable<CodeInstruction> SkipWaitingForSeconds(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var patched = false;
@@ -348,6 +350,4 @@ public abstract class ImpUtils
             return codes.AsEnumerable();
         }
     }
-}
-}
 }
